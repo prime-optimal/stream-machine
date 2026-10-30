@@ -1,0 +1,17 @@
+ARG BUN_IMAGE=docker.io/oven/bun:1.4.4-alpine
+ARG OPEN_DESIGN_BASE_IMAGE=stream-machine:base
+
+FROM ${BUN_IMAGE} AS codex-package
+ARG CODEX_VERSION=0.166.0
+WORKDIR /opt/open-design-codex
+RUN bun add --exact --ignore-scripts "@openai/codex@${CODEX_VERSION}"
+
+FROM ${OPEN_DESIGN_BASE_IMAGE}
+ARG CODEX_VERSION=0.166.0
+USER 0:0
+COPY --from=codex-package /opt/open-design-codex /opt/open-design-codex
+RUN apk add --no-cache bubblewrap && \
+    ln -s /opt/open-design-codex/node_modules/.bin/codex /usr/local/bin/codex
+LABEL io.stream-machine.codex-version="${CODEX_VERSION}"
+USER 1001:1001
+RUN codex --version

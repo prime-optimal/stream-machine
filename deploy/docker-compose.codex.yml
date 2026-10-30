@@ -1,0 +1,9 @@
+services:
+  open-design:
+    image: ${OPEN_DESIGN_CODEX_IMAGE:-stream-machine:codex}
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.codex
+      args:
+        OPEN_DESIGN_BASE_IMAGE: ${OPEN_DESIGN_BASE_IMAGE:?Build the Open Design base image first}
+        CODEX_VERSION: ${OPEN_DESIGN_CODEX_VERSION:-0.166.0}
