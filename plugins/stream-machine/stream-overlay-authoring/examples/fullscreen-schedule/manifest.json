@@ -1,0 +1,48 @@
+{
+  "plugin": "stream-overlay-authoring",
+  "version": "0.1.0",
+  "variant": "fullscreen-schedule",
+  "motion": "static",
+  "geometry": {
+    "evidence": "calculated-layout",
+    "canvas": {
+      "width": 1920,
+      "height": 1080,
+      "opaque": true,
+      "coverage": "full"
+    },
+    "scheduleBounds": {
+      "x": 96,
+      "y": 324,
+      "width": 1728,
+      "height": 550.8
+    },
+    "rows": [
+      {
+        "x": 96,
+        "y": 324,
+        "width": 1728,
+        "height": 183.6
+      },
+      {
+        "x": 96,
+        "y": 507.6,
+        "width": 1728,
+        "height": 183.6
+      },
+      {
+        "x": 96,
+        "y": 691.2,
+        "width": 1728,
+        "height": 183.6
+      }
+    ]
+  },
+  "provenance": {
+    "geometry": "Calculated source-pixel layout bounds from original CSS; not pixel-measured evidence",
+    "fonts": "System fonts; no font assets",
+    "brand": "Input colors/title are user values or explicitly chosen defaults; no measured brand source implied",
+    "schedule": "Synthetic demonstration content"
+  },
+  "sha256": "d2a29df99807ee6ec846265904b139236af4daa9d305fc6c2640b83d2a7d535d"
+}

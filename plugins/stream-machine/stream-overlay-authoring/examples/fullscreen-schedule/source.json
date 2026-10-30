@@ -1,0 +1,29 @@
+{
+  "variant": "fullscreen-schedule",
+  "title": "WEEKEND SESSIONS",
+  "style": "editorial",
+  "accent": "#b9ef67",
+  "background": "#111b20",
+  "foreground": "#f4f7ef",
+  "width": 1920,
+  "height": 1080,
+  "copy": "Demonstration program · replace before broadcast",
+  "motion": "static",
+  "aperture": null,
+  "schedule": [
+    {
+      "time": "18:00",
+      "name": "Sample opening session"
+    },
+    {
+      "time": "19:30",
+      "name": "Sample main session"
+    },
+    {
+      "time": "21:00",
+      "name": "Sample closing session"
+    }
+  ],
+  "synthetic": true,
+  "font": null
+}

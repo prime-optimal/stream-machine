@@ -1,0 +1,47 @@
+{
+  "plugin": "stream-overlay-authoring",
+  "version": "0.1.0",
+  "variant": "camera-frame",
+  "motion": "static",
+  "geometry": {
+    "evidence": "calculated-layout",
+    "canvas": {
+      "width": 1920,
+      "height": 1080,
+      "opaque": false,
+      "coverage": "partial"
+    },
+    "aperture": {
+      "x": 120,
+      "y": 180,
+      "width": 1680,
+      "height": 720
+    },
+    "borderOuter": {
+      "x": 116,
+      "y": 176,
+      "width": 1688,
+      "height": 728
+    },
+    "borderInner": {
+      "x": 120,
+      "y": 180,
+      "width": 1680,
+      "height": 720
+    },
+    "nameplate": {
+      "x": 60,
+      "y": 972,
+      "width": 1800,
+      "height": 64.8
+    },
+    "apertureCovered": false
+  },
+  "provenance": {
+    "geometry": "Calculated source-pixel layout bounds from original CSS; not pixel-measured evidence",
+    "fonts": "System fonts; no font assets",
+    "brand": "Input colors/title are user values or explicitly chosen defaults; no measured brand source implied",
+    "schedule": "Synthetic demonstration content"
+  },
+  "sha256": "e6d25b2c1d4f92ee98d1d7f35762dded83ad690ae0c99400053a4f1cebbd26df"
+}
