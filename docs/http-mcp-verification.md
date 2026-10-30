@@ -23,7 +23,8 @@ October 30, 2026. Integration issue: prime-optimal/stream-makeover#51. PR: https
 | Public DELETE session | 200 |
 | Anonymous POST | 401 |
 | Installed cloud Codex binary | 0.166.0 |
-| Cloud Codex login | Device authorization started; pending account holder completion |
+| Cloud Codex login | Device authorization completed; login status confirms ChatGPT |
+| Cloud model call | Codex exec returned exactly `CLOUD_CODEX_OK`, exit 0 |
 
 The same MCP protocol checks passed against the built Linux container before deployment. Existing local stdio MCP registration was separately verified through initialization, tool discovery, reading the existing overlay project's README, and local Codex discovery.
 
@@ -35,7 +36,7 @@ The same MCP protocol checks passed against the built Linux container before dep
 - Repository guard and whitespace checks passed.
 - Full Linux amd64 application image and Codex layer built successfully.
 - A real container build reproduced host dependency contamination: nested aube compiler shims overwrote Linux pnpm binaries. Recursive Docker exclusions fix the context; release image built from committed `git archive` input.
-- Independent Codex layer app-server initialization passed as UID 1001 with writable home. This is not proof of authenticated model execution.
+- Independent Codex layer app-server initialization passed as UID 1001 with writable home. After device authorization, a live cloud Codex call using its default model returned the exact requested marker. That test requested no tool calls or file edits; it proves authenticated inference, not sandboxed execution or asset generation.
 
 Focused test command used from `apps/daemon`:
 
@@ -55,7 +56,7 @@ Rollback must use the saved workload configuration and, if schema rollback is re
 
 ## Remaining boundaries
 
-- Complete cloud Codex authentication, then verify one actual generation separately.
+- Verify an actual Open Design artifact generation and its tool/file execution separately. Device sign-in initially failed because the ChatGPT account's device-code authorization setting was disabled; the account holder enabled it and completed login.
 - Stream Studio has not yet been wired to this endpoint. Its backend must enforce user/project ownership and keep Open Design administrative credentials server-side.
 - This is a single-tenant administrative MCP endpoint, not public per-streamer authentication or an OAuth registration service.
 - No Twitch event delivery or social publishing was added in this task.
