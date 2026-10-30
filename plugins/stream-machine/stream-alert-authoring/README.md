@@ -4,12 +4,12 @@ A local OpenDesign scenario for safe, creator-specific follower alerts. No runti
 npm dependencies, private fonts, remote scripts or Twitch connector are included.
 
 ## Install and use
-From the folder's parent, using the installed OpenDesign CLI:
+From this package directory, using the installed OpenDesign CLI:
 
 ```sh
-od plugin validate ./generated-plugin --no-daemon
-od plugin pack ./generated-plugin
-od plugin install ./generated-plugin
+od plugin validate . --no-daemon
+od plugin pack .
+od plugin install .
 od plugin doctor stream-alert-authoring
 ```
 
@@ -33,8 +33,8 @@ od plugin run stream-alert-authoring --project PROJECT_ID --inputs '{"brandName"
 Requires Node 24 (native `.cts` support); no dependency installation:
 
 ```sh
-node generated-plugin/tools/build.cts generated-plugin/examples/generic.json index.html
-node --test generated-plugin/tests/*.test.cts
+node tools/build.cts examples/generic.json output/index.html
+node --test tests/*.test.cts
 ```
 
 Open examples/preview.html for a labeled one-shot synthetic demonstration. Open
@@ -67,5 +67,5 @@ the manifest stages all of these resources.
 
 See docs/transport.md, docs/provenance.md and contracts/. Actual validation is
 recorded in VALIDATION.md and [the integration record](../../../docs/stream-scenarios-acceptance.md).
-The latest canonical-skill manifest correction has passed the platform loader
-test locally; its hosted reinstall remains pending. No live Twitch delivery is claimed.
+The canonical-skill manifest correction passed the platform loader test and was
+reinstalled in the hosted instance. No live Twitch delivery is claimed.

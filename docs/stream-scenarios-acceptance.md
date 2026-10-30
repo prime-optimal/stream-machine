@@ -50,8 +50,8 @@ Both manifests declare `od.context.skills: [{"path":"./SKILL.md"}]`.
 daemon integration test calls `loadPluginLocalSkill` for both real packages and
 checks that the complete workflow body is loaded.
 
-The alert correction is verified locally but not yet reinstalled in the hosted
-instance. The accepted alert runs used the earlier installed manifest and read
+The alert correction is verified locally and reinstalled in the hosted instance.
+The accepted alert runs used the earlier installed manifest and read
 the staged skill file. The overlay correction was installed before the outage.
 Doctor currently reports an incorrect unresolved-global-skill warning for valid
 local paths; issue 56 tracks that diagnostic independently. Keep the valid local
@@ -59,14 +59,13 @@ path rather than removing workflow context to suppress a warning.
 
 ## Remaining cloud acceptance
 
-- Reinstall the alert package with canonical local-skill context.
 - Generate a fresh K-Lab camera frame from installed overlay scenario: 1280×720,
   scaled auto aperture, private supplied WOFF2 font, orange/black.
 - Generate a distinct full-screen schedule; verify opaque coverage and row bounds.
 - Download immutable outputs, test actual browser behavior and OBS compositing,
   record hashes/screenshots, then close issue 53.
 
-These runs are not complete. Sealos public ingress became unavailable and the
-existing Kubernetes configuration now fails certificate verification. Resume
-using a trusted refreshed kubeconfig; do not bypass TLS verification. Device-code
-login had succeeded earlier and is a separate concern from this access failure.
+These runs are not complete. Sealos access recovered after the user supplied a
+fresh trusted kubeconfig. Public authenticated HTML/API and MCP checks pass;
+anonymous HTML remains protected. K-Lab camera generation is now in progress.
+Device-code login had succeeded earlier and was separate from the access failure.
