@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "api": "window.StreamAlert",
+  "defaultDurationSeconds": 6,
+  "durationBoundsSeconds": [2, 30],
+  "states": ["loading", "idle", "playing"],
+  "initial": "loading until document.fonts.ready, then transparent idle",
+  "play": {"statuses": ["accepted", "invalid", "duplicate", "queue-full"], "queue": "FIFO", "waitingCapacity": 20},
+  "deduplication": {"acceptedIdsRetained": 100, "rejectedConsumeHistory": false, "resetsOnReload": true},
+  "replay": "Last started payload; bypasses ID dedupe; still respects capacity; invalid before first start",
+  "cancel": "Returns cancelled; clears queue; stops current; invalidates stale completion; retains IDs and last payload",
+  "getState": ["state", "queued", "current", "last", "rememberedIds", "capacity"],
+  "animation": {"finite": true, "initialOpacity": 0, "terminalOpacity": 0, "audio": false, "reducedMotion": "static finite hold", "seek": "window.AlertTimeline.seek(seconds); paused inspection only, not event completion"},
+  "preview": "Explicit ?preview=1 only; one synthetic event after fonts; controls; no auto-loop",
+  "transport": "Not included; Stream Studio backend owns authorization and delivery"
+}

@@ -1,0 +1,139 @@
+{
+  "specVersion": "1",
+  "name": "stream-alert-authoring",
+  "title": "Stream Alert Authoring",
+  "version": "0.1.0",
+  "description": "Author safe, finite, offline follower alerts for OBS with a typed event boundary.",
+  "tags": [
+    "obs",
+    "alerts",
+    "streaming"
+  ],
+  "od": {
+    "kind": "scenario",
+    "mode": "scenario",
+    "taskKind": "new-generation",
+    "scenario": "stream-alert-authoring",
+    "capabilities": [
+      "prompt:inject",
+      "fs:read",
+      "fs:write",
+      "subprocess"
+    ],
+    "preview": {
+      "type": "html",
+      "entry": "examples/preview.html",
+      "motion": "static"
+    },
+    "useCase": {
+      "query": "Create an OBS follower alert using the packaged workflow. brandName={{brandName}}; eventLabel={{eventLabel}}; accent={{accent}}; background={{background}}; headline={{headline}}; footer={{footer}}; sampleFollower={{sampleFollower}}; width={{width}}; height={{height}}; duration={{duration}}; styleDirection={{styleDirection}}; fontFile={{fontFile}}; brandGuide={{brandGuide}}. Produce offline index.html, authoring source, contract and README; keep transport in Stream Studio.",
+      "exampleOutputs": [
+        {
+          "path": "examples/preview.html",
+          "title": "Synthetic playable preview"
+        },
+        {
+          "path": "examples/editorial.html",
+          "title": "Alternate input set"
+        }
+      ]
+    },
+    "context": {
+      "assets": [
+        "src",
+        "tools",
+        "contracts",
+        "examples",
+        "docs",
+        "tests",
+        "open-design.json",
+        "SKILL.md"
+      ]
+    },
+    "inputs": [
+      {
+        "name": "brandName",
+        "label": "Brand Name",
+        "type": "string",
+        "default": "Signal room"
+      },
+      {
+        "name": "eventLabel",
+        "label": "Event Label",
+        "type": "string",
+        "default": "Community / live"
+      },
+      {
+        "name": "accent",
+        "label": "Accent",
+        "type": "string",
+        "default": "#69e3b0"
+      },
+      {
+        "name": "background",
+        "label": "Background",
+        "type": "string",
+        "default": "#101b22"
+      },
+      {
+        "name": "headline",
+        "label": "Headline",
+        "type": "string",
+        "default": "New follower"
+      },
+      {
+        "name": "footer",
+        "label": "Footer",
+        "type": "string",
+        "default": "Welcome to the room"
+      },
+      {
+        "name": "sampleFollower",
+        "label": "Sample Follower",
+        "type": "string",
+        "default": "Sample follower"
+      },
+      {
+        "name": "width",
+        "label": "Width",
+        "type": "number",
+        "default": 960
+      },
+      {
+        "name": "height",
+        "label": "Height",
+        "type": "number",
+        "default": 320
+      },
+      {
+        "name": "duration",
+        "label": "Duration",
+        "type": "number",
+        "default": 6
+      },
+      {
+        "name": "styleDirection",
+        "label": "Style Direction",
+        "type": "select",
+        "default": "geometric",
+        "options": [
+          "geometric",
+          "editorial",
+          "minimal"
+        ]
+      },
+      {
+        "name": "fontFile",
+        "label": "Optional licensed creator font",
+        "type": "file",
+        "default": ""
+      },
+      {
+        "name": "brandGuide",
+        "label": "Optional creator brand guide",
+        "type": "file",
+        "default": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "brandName": "Signal room",
+  "eventLabel": "Community / live",
+  "accent": "#69e3b0",
+  "background": "#101b22",
+  "headline": "New follower",
+  "footer": "Welcome to the room",
+  "sampleFollower": "Sample follower",
+  "width": 960,
+  "height": 320,
+  "duration": 6,
+  "styleDirection": "geometric",
+  "fontFile": "",
+  "brandGuide": ""
+}
