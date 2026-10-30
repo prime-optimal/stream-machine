@@ -21,6 +21,7 @@ import { findAtom, isImplementedAtom, isKnownAtom } from './atoms.js';
 import { validateConnectorRefs, type ConnectorProbe } from './connector-gate.js';
 import { isParseableUntil } from './until.js';
 import { listSnapshotsForProject, markSnapshotStale } from './snapshots.js';
+import { loadPluginLocalSkill } from './local-skill.js';
 
 type SqliteDb = Database.Database;
 
@@ -40,14 +41,14 @@ export interface DoctorReport {
   freshDigest: string;
 }
 
-export function doctorPlugin(
+export async function doctorPlugin(
   plugin: InstalledPluginRecord,
   registry: RegistryView,
   options?: {
     warnOnMissingRefs?: boolean;
     connectorProbe?: ConnectorProbe | undefined;
   },
-): DoctorReport {
+): Promise<DoctorReport> {
   const issues: Diagnostic[] = [];
   const manifest = plugin.manifest;
 
@@ -147,7 +148,13 @@ export function doctorPlugin(
     registry,
     warnOnMissing: options?.warnOnMissingRefs ?? true,
   });
-  for (const warn of resolved.warnings) {
+  const diagnostics = resolved.warnings.length > 0
+    ? resolveContext(await manifestForRegistryDiagnostics(plugin), {
+        registry,
+        warnOnMissing: options?.warnOnMissingRefs ?? true,
+      })
+    : resolved;
+  for (const warn of diagnostics.warnings) {
     issues.push({ severity: 'warning', code: 'context.unresolved', message: warn });
   }
 
@@ -166,6 +173,29 @@ export function doctorPlugin(
 
   const ok = issues.every((d) => d.severity !== 'error');
   return { pluginId: plugin.id, ok, issues, freshDigest };
+}
+
+async function manifestForRegistryDiagnostics(plugin: InstalledPluginRecord): Promise<PluginManifest> {
+  const manifest = plugin.manifest;
+  const skills = manifest.od?.context?.skills;
+  if (!skills?.length) return manifest;
+  const loadable = await Promise.all(skills.map(async (ref) => {
+    const candidate: InstalledPluginRecord = {
+      ...plugin,
+      manifest: {
+        ...manifest,
+        od: { ...manifest.od, context: { ...manifest.od?.context, skills: [ref] } },
+      },
+    };
+    return await loadPluginLocalSkill(candidate) !== null;
+  }));
+  return {
+    ...manifest,
+    od: {
+      ...manifest.od,
+      context: { ...manifest.od?.context, skills: skills.filter((_, index) => !loadable[index]) },
+    },
+  };
 }
 
 // Walk every snapshot for a project and flip those whose digest no longer

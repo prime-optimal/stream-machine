@@ -83,7 +83,7 @@ export async function validatePluginFolder(
     };
   }
 
-  const doctor = doctorPlugin(probe.record, input.registry ?? EMPTY_REGISTRY, {
+  const doctor = await doctorPlugin(probe.record, input.registry ?? EMPTY_REGISTRY, {
     warnOnMissingRefs: !!input.registry,
     ...(input.connectorProbe ? { connectorProbe: input.connectorProbe } : {}),
   });
