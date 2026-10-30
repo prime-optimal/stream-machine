@@ -48,6 +48,11 @@
         "tests",
         "open-design.json",
         "SKILL.md"
+      ],
+      "skills": [
+        {
+          "path": "./SKILL.md"
+        }
       ]
     },
     "inputs": [

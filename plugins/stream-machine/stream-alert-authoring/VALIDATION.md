@@ -38,9 +38,10 @@ These are fresh Node/CLI checks, not actual browser or OBS checks. Creator font
 browser acceptance is reserved for the parent. The synthetic font test uses
 clearly labeled non-font bytes solely to verify embedding and CSS emission.
 Inherited reference results were not relabeled as this package's results.
-Parent acceptance still needs hosted install/doctor, two fresh installed-scenario
-invocations, browser visual/interaction acceptance and stock OBS acceptance.
-No install, publication, OAuth or live Twitch delivery was performed here.
+This authoring-run record predates parent acceptance. The parent subsequently
+installed the scenario, generated two fresh outputs and accepted both in actual
+browser and OBS testing. See [integration record](../../../docs/stream-scenarios-acceptance.md).
+No OAuth or live Twitch delivery was tested.
 
 Static review: no private font assets, remote runtime resources, unresolved
 build placeholders, absolute authoring-project dependencies or fabricated

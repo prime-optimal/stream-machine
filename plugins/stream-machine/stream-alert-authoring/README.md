@@ -14,9 +14,9 @@ od plugin doctor stream-alert-authoring
 ```
 
 In hosted environments replace `od` with `"$OD_NODE_BIN" "$OD_BIN"`.
-Alternatively add this folder through **My plugins**. Installation/doctor and two
-fresh installed-scenario invocations are reserved for the parent acceptance run;
-they are not claimed by this package. The subprocess capability executes the
+Alternatively add this folder through **My plugins**. The installed package produced
+two fresh outputs accepted in browser and OBS; see the integration record below.
+The subprocess capability executes the
 local deterministic builder/tests; no network or connector capability is needed.
 If a restricted install requests grants, use the actual capability review rather
 than marketplace publishing or enterprise setup.
@@ -66,5 +66,6 @@ Copy tests, complete examples and metadata with source when creating authoring/;
 the manifest stages all of these resources.
 
 See docs/transport.md, docs/provenance.md and contracts/. Actual validation is
-recorded in VALIDATION.md. Pending: hosted installation, fresh scenario runs,
-real browser matrix and OBS acceptance. No live Twitch delivery is claimed.
+recorded in VALIDATION.md and [the integration record](../../../docs/stream-scenarios-acceptance.md).
+The latest canonical-skill manifest correction has passed the platform loader
+test locally; its hosted reinstall remains pending. No live Twitch delivery is claimed.
