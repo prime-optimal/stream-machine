@@ -23,7 +23,7 @@
     "context": {
       "skills": [
         {
-          "path": "SKILL.md"
+          "path": "./SKILL.md"
         }
       ],
       "assets": [
