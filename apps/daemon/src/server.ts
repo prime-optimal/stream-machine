@@ -887,6 +887,7 @@ import { registerPluginAssetRoutes } from './routes/plugins/assets.js';
 import { registerPluginMarketplaceRoutes } from './routes/plugins/marketplaces.js';
 import { registerPluginEventRoutes, registerPluginRoutes, registerProjectPluginRoutes } from './routes/plugins/index.js';
 import { registerMcpRoutes } from './mcp-routes.js';
+import { registerHttpMcpRoutes } from './mcp-http.js';
 import { registerXaiRoutes } from './routes/xai.js';
 import { registerLiveArtifactRoutes } from './routes/live-artifact.js';
 import { registerDeliverableSyntaxToolRoutes } from './routes/deliverable-syntax-tool.js';
@@ -9257,6 +9258,10 @@ export async function startServer({
   };
 
   // External services
+  const httpMcpLifecycle = registerHttpMcpRoutes(app, {
+    daemonUrl: () => `http://127.0.0.1:${resolvedPort}`,
+    port: () => Number(resolvedPort),
+  });
   registerMcpRoutes(app, {
     http: httpDeps,
     paths: pathDeps,
@@ -18784,6 +18789,7 @@ export async function startServer({
     // work below.
     let messageEventPayloadHeal: MessageEventPayloadHealHandle | null = null;
     const cleanupDaemonBackgroundWork = () => {
+      void httpMcpLifecycle.close();
       stopDiagnosticConfigObserver();
       stopDiagnosticApiObserver();
       void automaticDiagnostics?.stop();
@@ -18814,6 +18820,7 @@ export async function startServer({
       if (daemonShutdownPromise) return daemonShutdownPromise;
       daemonShutdownPromise = (async () => {
         daemonShuttingDown = true;
+        await httpMcpLifecycle.close();
         await velaRoutesLifecycle.close();
         amrTerminalReportDelivery.stop();
         clearTerminalTelemetryFallbackTimers();

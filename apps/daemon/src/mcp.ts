@@ -1884,22 +1884,16 @@ export async function runMcpStdio(options: RunMcpOptions): Promise<void> {
   }
 }
 
-async function runMcpStdioImplementation(options: RunMcpOptions): Promise<void> {
-  let closeTransportForIdle: (() => void) | null = null;
-  let idleExit: ReturnType<typeof _createMcpIdleExitController> | null = null;
-  try {
-    const daemonTarget = createMcpDaemonTarget(options);
-    const briefStore = createLocalMcpBriefStore();
-    let observabilityPromise: Promise<McpObservabilitySession> | null = null;
-    idleExit = _createMcpIdleExitController({
-      idleMs: _resolveMcpStdioIdleExitMs(),
-      onIdle: () => closeTransportForIdle?.(),
-    });
-    const withMcpActivity =
-      <Args extends unknown[], Result>(handler: (...args: Args) => Result | Promise<Result>) =>
-        (...args: Args) =>
-          idleExit!.trackRequest(() => handler(...args));
-
+export function createMcpServer(
+  options: RunMcpOptions,
+  trackRequest: <T>(work: () => Promise<T>) => Promise<T> = (work) => work(),
+): Server {
+  const daemonTarget = createMcpDaemonTarget(options);
+  const briefStore = createLocalMcpBriefStore();
+  let observabilityPromise: Promise<McpObservabilitySession> | null = null;
+  const withMcpActivity =
+    <Args extends unknown[], Result>(handler: (...args: Args) => Promise<Result>) =>
+      (...args: Args) => trackRequest(() => handler(...args));
   const server = new Server(
     { name: SERVER_NAME, version: SERVER_VERSION },
     {
@@ -2055,6 +2049,20 @@ async function runMcpStdioImplementation(options: RunMcpOptions): Promise<void> 
       args,
     );
   }));
+
+  return server;
+}
+
+async function runMcpStdioImplementation(options: RunMcpOptions): Promise<void> {
+  let closeTransportForIdle: (() => void) | null = null;
+  let idleExit: ReturnType<typeof _createMcpIdleExitController> | null = null;
+  try {
+    idleExit = _createMcpIdleExitController({
+      idleMs: _resolveMcpStdioIdleExitMs(),
+      onIdle: () => closeTransportForIdle?.(),
+    });
+
+  const server = createMcpServer(options, (work) => idleExit!.trackRequest(work));
 
   const transport = new StdioServerTransport();
   try {
