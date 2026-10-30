@@ -1,0 +1,165 @@
+{
+  "specVersion": "1.0.0",
+  "name": "stream-overlay-authoring",
+  "title": "Stream Overlay Authoring",
+  "version": "0.1.0",
+  "description": "Persistent transparent camera frames and fullscreen schedules for offline OBS browser sources.",
+  "tags": [
+    "obs",
+    "overlay",
+    "schedule"
+  ],
+  "od": {
+    "kind": "scenario",
+    "mode": "scenario",
+    "scenario": "stream-overlay-authoring",
+    "taskKind": "new-generation",
+    "capabilities": [
+      "prompt:inject",
+      "fs:read",
+      "fs:write",
+      "subprocess"
+    ],
+    "context": {
+      "skills": [
+        {
+          "path": "./SKILL.md"
+        }
+      ],
+      "assets": [
+        "tools/build.cts",
+        "runtime/overlay.cts",
+        "tests/overlay.test.cts",
+        "tests/fixtures/camera.json",
+        "tests/fixtures/schedule.json",
+        "references/inputs.md",
+        "examples/camera-frame",
+        "examples/fullscreen-schedule",
+        "tools/validate.cts",
+        "references/plugin.schema.json"
+      ]
+    },
+    "inputs": [
+      {
+        "name": "variant",
+        "type": "select",
+        "options": [
+          "camera-frame",
+          "fullscreen-schedule"
+        ],
+        "default": "camera-frame",
+        "label": "variant"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "WEEKEND / STUDIO",
+        "label": "title"
+      },
+      {
+        "name": "style",
+        "type": "select",
+        "options": [
+          "technical",
+          "editorial"
+        ],
+        "default": "technical",
+        "label": "style"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "default": "#b9ef67",
+        "label": "accent"
+      },
+      {
+        "name": "background",
+        "type": "string",
+        "default": "#111b20",
+        "label": "background"
+      },
+      {
+        "name": "foreground",
+        "type": "string",
+        "default": "#f4f7ef",
+        "label": "foreground"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": 1920,
+        "label": "width"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": 1080,
+        "label": "height"
+      },
+      {
+        "name": "aperture",
+        "type": "text",
+        "default": "auto",
+        "label": "Camera aperture (auto or JSON)"
+      },
+      {
+        "name": "schedule",
+        "type": "text",
+        "default": "[{\"time\":\"18:00\",\"name\":\"Sample opening session\"},{\"time\":\"19:30\",\"name\":\"Sample main session\"},{\"time\":\"21:00\",\"name\":\"Sample closing session\"}]",
+        "label": "Schedule rows (JSON)"
+      },
+      {
+        "name": "synthetic",
+        "type": "boolean",
+        "default": true,
+        "label": "synthetic"
+      },
+      {
+        "name": "copy",
+        "type": "string",
+        "default": "Independent sessions · live from the studio",
+        "label": "copy"
+      },
+      {
+        "name": "motion",
+        "type": "select",
+        "options": [
+          "static",
+          "reduced"
+        ],
+        "default": "static",
+        "label": "motion"
+      },
+      {
+        "name": "brandGuide",
+        "type": "file",
+        "required": false,
+        "label": "Optional brand guide"
+      },
+      {
+        "name": "creatorFont",
+        "type": "file",
+        "required": false,
+        "label": "Optional licensed WOFF2"
+      }
+    ],
+    "useCase": {
+      "query": "Create a {{variant}} overlay for {{title}}. Style {{style}}; colors accent {{accent}}, background {{background}}, foreground {{foreground}}. Canvas {{width}}×{{height}}. Camera-only aperture (blank/auto derives from canvas): {{aperture}}; ignored for fullscreen-schedule. Schedule JSON: {{schedule}}. Synthetic schedule: {{synthetic}}. Supporting copy: {{copy}}. Motion: {{motion}}. Ingest optional guide {{brandGuide}} and licensed font {{creatorFont}} if supplied; map to output config and provenance. Follow the bundled SKILL.md, preserve prior outputs, build and validate one offline versioned overlay.",
+      "exampleOutputs": [
+        {
+          "path": "examples/camera-frame/index.html",
+          "title": "Persistent camera frame"
+        },
+        {
+          "path": "examples/fullscreen-schedule/index.html",
+          "title": "Fullscreen sample schedule"
+        }
+      ]
+    },
+    "preview": {
+      "type": "html",
+      "entry": "examples/fullscreen-schedule/index.html",
+      "motion": "static"
+    }
+  }
+}

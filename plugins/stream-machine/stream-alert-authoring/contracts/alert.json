@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Visual follower event",
+  "description": "Local visual API payload; not a Twitch EventSub envelope or evidence of delivery. Additional properties are ignored. id length uses JavaScript UTF-16 code units (maximum 128), an extra runtime constraint beyond JSON Schema codepoint maxLength.",
+  "type": "object",
+  "required": [
+    "type",
+    "displayName"
+  ],
+  "properties": {
+    "type": {
+      "const": "follow"
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "\\S",
+      "description": "Original case preserved. 1–64 Unicode codepoints, with at least one non-whitespace character. Rendered as text only."
+    },
+    "id": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Optional exact event ID. Empty string is a valid ID. Last 100 accepted unique IDs are retained until reload."
+    }
+  },
+  "additionalProperties": true,
+  "examples": [
+    {
+      "type": "follow",
+      "displayName": "Sample follower",
+      "id": "synthetic-001"
+    }
+  ]
+}
