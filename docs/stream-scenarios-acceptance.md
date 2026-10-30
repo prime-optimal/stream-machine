@@ -9,7 +9,7 @@ Two local Open Design packages live under `plugins/stream-machine/`:
 | Package | Contract | Current acceptance |
 | --- | --- | --- |
 | stream-alert-authoring | Offline HTML; finite event animation, queue, replay, cancel, transparent idle | Two fresh installed-scenario outputs accepted in browser and OBS |
-| stream-overlay-authoring | Offline HTML; persistent camera frame or full-screen schedule | Cloud authoring/refinement and nine package tests passed; fresh installed-output browser/OBS acceptance pending |
+| stream-overlay-authoring | Offline HTML; persistent camera frame or full-screen schedule | Two fresh installed-scenario outputs accepted in browser and OBS; nine package tests passed |
 
 The alert package uses native requestAnimationFrame. It does not implement
 HyperFrames seeking. The earlier K-Lab pilot uses GSAP and a registered timeline;
@@ -53,19 +53,26 @@ checks that the complete workflow body is loaded.
 The alert correction is verified locally and reinstalled in the hosted instance.
 The accepted alert runs used the earlier installed manifest and read
 the staged skill file. The overlay correction was installed before the outage.
-Doctor currently reports an incorrect unresolved-global-skill warning for valid
-local paths; issue 56 tracks that diagnostic independently. Keep the valid local
-path rather than removing workflow context to suppress a warning.
+The hosted image still reports an incorrect unresolved-global-skill warning for
+valid local paths. Source fix PR3 is merged; the running image has not been
+redeployed with it. Keep the valid local path rather than removing workflow
+context to suppress a warning.
 
-## Remaining cloud acceptance
+## Fresh overlay acceptance
 
-- Generate a fresh K-Lab camera frame from installed overlay scenario: 1280×720,
-  scaled auto aperture, private supplied WOFF2 font, orange/black.
-- Generate a distinct full-screen schedule; verify opaque coverage and row bounds.
-- Download immutable outputs, test actual browser behavior and OBS compositing,
-  record hashes/screenshots, then close issue 53.
+| Fixture | Cloud run | Export SHA-256 | Browser / OBS checks |
+| --- | --- | --- | --- |
+| K-Lab Halloween camera; 1280×720; supplied WOFF2 | 3c8decdb-5ea2-41c8-9053-054bf2b504fd | e1b1e904e35c1da5a266fdb193c568f1d05c29e42adfa1cf08ee0a2037535a4f | 31 / 11 |
+| Night Arcade schedule; 1280×720; six rows; system fonts | 340133e0-3985-4147-8ac8-b7702073597c | a45f097539221aac2a623ff56fc06acc5d6bfece8529f64e78239deebd162470 | 33 / 9 |
 
-These runs are not complete. Sealos access recovered after the user supplied a
-fresh trusted kubeconfig. Public authenticated HTML/API and MCP checks pass;
-anonymous HTML remains protected. K-Lab camera generation is now in progress.
-Device-code login had succeeded earlier and was separate from the access failure.
+Both runs succeeded with no unfinished work. Camera DOM geometry matched the
+80×120 origin and 1120×480 opening. All 537,600 opening pixels were transparent
+in OBS; actual compositing revealed the checker beneath. Creator font bytes and
+rendered glyph metrics were verified. Schedule rows and labels matched the exact
+inputs; all 921,600 pixels were opaque. Static hold and refresh images matched.
+Both update APIs passed safe-text, atomic-rejection and restoration checks.
+OBS scene inventory was restored and broadcast outputs remained stopped.
+
+Sealos access recovered after the user supplied a fresh trusted kubeconfig.
+Public authenticated HTML/API and MCP checks pass; anonymous HTML remains
+protected. Device-code login was separate from the earlier access failure.

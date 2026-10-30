@@ -40,7 +40,7 @@ clearly labeled non-font bytes solely to verify embedding and CSS emission.
 Inherited reference results were not relabeled as this package's results.
 This authoring-run record predates parent acceptance. The parent subsequently
 installed the scenario, generated two fresh outputs and accepted both in actual
-browser and OBS testing. See [integration record](../../../docs/stream-scenarios-acceptance.md).
+browser and OBS testing. See [integration record](https://github.com/prime-optimal/stream-machine/blob/main/docs/stream-scenarios-acceptance.md).
 No OAuth or live Twitch delivery was tested.
 
 Static review: no private font assets, remote runtime resources, unresolved

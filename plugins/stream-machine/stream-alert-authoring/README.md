@@ -66,6 +66,6 @@ Copy tests, complete examples and metadata with source when creating authoring/;
 the manifest stages all of these resources.
 
 See docs/transport.md, docs/provenance.md and contracts/. Actual validation is
-recorded in VALIDATION.md and [the integration record](../../../docs/stream-scenarios-acceptance.md).
+recorded in VALIDATION.md and [the integration record](https://github.com/prime-optimal/stream-machine/blob/main/docs/stream-scenarios-acceptance.md).
 The canonical-skill manifest correction passed the platform loader test and was
 reinstalled in the hosted instance. No live Twitch delivery is claimed.
