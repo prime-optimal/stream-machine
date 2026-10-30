@@ -114,7 +114,7 @@ describe('plugin-system Phase 1 closed loop (e2e-1)', () => {
     expect(refetched!.manifestSourceDigest).toBe(computed.manifestSourceDigest);
     expect(refetched!.inputs.topic).toBe('AI design tools');
 
-    const report = doctorPlugin(fetched!, {
+    const report = await doctorPlugin(fetched!, {
       skills: [],
       designSystems: [],
       craft: [],

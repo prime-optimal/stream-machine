@@ -97,24 +97,24 @@ describe('doctorPlugin — component capability gate', () => {
     },
   };
 
-  it('errors when a surface ships a component without genui:custom-component', () => {
+  it('errors when a surface ships a component without genui:custom-component', async () => {
     expect(validateSafe(baseManifest).ok).toBe(true);
-    const report = doctorPlugin(pluginRecord(baseManifest), REGISTRY);
+    const report = await doctorPlugin(pluginRecord(baseManifest), REGISTRY);
     const codes = report.issues.map((d) => d.code);
     expect(codes).toContain('genui.component-capability');
     expect(report.ok).toBe(false);
   });
 
-  it('passes when the matching capability is declared', () => {
+  it('passes when the matching capability is declared', async () => {
     const m: PluginManifest = {
       ...baseManifest,
       od: { ...baseManifest.od, capabilities: ['prompt:inject', 'genui:custom-component'] },
     };
-    const report = doctorPlugin(pluginRecord(m), REGISTRY);
+    const report = await doctorPlugin(pluginRecord(m), REGISTRY);
     expect(report.issues.find((d) => d.code === 'genui.component-capability')).toBeUndefined();
   });
 
-  it('errors on path-traversal segments inside the component path', () => {
+  it('errors on path-traversal segments inside the component path', async () => {
     const m: PluginManifest = {
       ...baseManifest,
       od: {
@@ -132,7 +132,7 @@ describe('doctorPlugin — component capability gate', () => {
         },
       },
     };
-    const report = doctorPlugin(pluginRecord(m), REGISTRY);
+    const report = await doctorPlugin(pluginRecord(m), REGISTRY);
     expect(report.issues.find((d) => d.code === 'genui.component-traversal')).toBeDefined();
     expect(report.ok).toBe(false);
   });

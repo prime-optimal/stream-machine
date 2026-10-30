@@ -125,6 +125,23 @@ describe('validatePluginFolder', () => {
     expect(diagnostics.some((d) => d.message.includes('missing-skill') || d.message.includes('skill'))).toBe(true);
   });
 
+  it('validates a plugin-local skill against an empty global registry', async () => {
+    await writeManifest({
+      name: 'local-skill',
+      version: '0.1.0',
+      od: { context: { skills: [{ path: './SKILL.md' }] } },
+    });
+    await writeSkill('---\nname: local-skill\n---\n# Workflow instructions\n');
+
+    const result = await validatePluginFolder({
+      folder,
+      registry: { skills: [], designSystems: [], craft: [], atoms: [] },
+    });
+
+    expect(result.ok).toBe(true);
+    expect(flattenValidationDiagnostics(result).filter((issue) => issue.code === 'context.unresolved')).toEqual([]);
+  });
+
   it('flattenValidationDiagnostics merges resolve + doctor diagnostics in order', async () => {
     await writeFile(path.join(folder, 'open-design.json'), '{ broken');
     const result = await validatePluginFolder({ folder });
